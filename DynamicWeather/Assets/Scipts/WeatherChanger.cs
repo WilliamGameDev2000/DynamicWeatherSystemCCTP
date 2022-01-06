@@ -4,17 +4,58 @@ using UnityEngine;
 
 public class WeatherChanger : MonoBehaviour
 {
-    public GameObject[] weatherStates;
+    public weatherList currentWeather;
+    private weatherProperties currentProperties;
 
-    // Start is called before the first frame update
+    public List<weatherProperties> properties = new List<weatherProperties>();
+
     void Start()
     {
-        
+        currentProperties = properties[(int)currentWeather];
+        StartWeather(currentProperties);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
+    void StartWeather(weatherProperties weather)
+    {
+        if(weather.Thunder)
+        {
+            Debug.Log("Weather played has thunder");
+        }
+        else
+        {
+            Debug.Log("Weather played has no thunder");
+        }
+
+        if(weather.haveClouds)
+        {
+            Debug.Log("Weather played has clouds");
+        }
+        else
+        {
+            Debug.Log("Weather played has no clouds");
+        }
+        if(weather.intesnsity > 0)
+        {
+            Debug.Log("Weather is in effect");
+        }
+        else 
+        {
+            Debug.Log("Weather is clear");
+        }
+    }
+}
+
+public enum weatherList
+{
+    CLEAR,
+    OVERCAST,
+    RAINING,
+    THUNDERSTORM,
+    SNOWING,
+    FOG
 }

@@ -390,3 +390,78 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &972210128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 972210130}
+  - component: {fileID: 972210129}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &972210129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972210128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a13c6d357cae24d92d296abe5faf50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeather: 0
+  properties:
+  - name: CLEAR
+    intesnsity: 0
+    effectMat: {fileID: 0}
+    haveClouds: 0
+    Thunder: 0
+  - name: OVERCAST
+    intesnsity: 1
+    effectMat: {fileID: 0}
+    haveClouds: 1
+    Thunder: 0
+  - name: RAINING
+    intesnsity: 4
+    effectMat: {fileID: 0}
+    haveClouds: 1
+    Thunder: 0
+  - name: THUNDERSTORM
+    intesnsity: 6
+    effectMat: {fileID: 0}
+    haveClouds: 1
+    Thunder: 1
+  - name: SNOWING
+    intesnsity: 5
+    effectMat: {fileID: 0}
+    haveClouds: 1
+    Thunder: 0
+  - name: FOG
+    intesnsity: 3
+    effectMat: {fileID: 0}
+    haveClouds: 0
+    Thunder: 0
+--- !u!4 &972210130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972210128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.966843, y: 3.9425592, z: 3.0135067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
