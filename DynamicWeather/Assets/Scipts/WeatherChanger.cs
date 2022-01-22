@@ -1,61 +1,36 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeatherChanger : MonoBehaviour
 {
-    public weatherList currentWeather;
-    private weatherProperties currentProperties;
+    
+    [SerializeField] int ticks_before_change = 15;
 
-    public List<weatherProperties> properties = new List<weatherProperties>();
+    private int currentWeatherTick = 0;
 
-    void Start()
+    public static Action<weatherList> OnWeatherChange;
+    //check tick is at change threshold, pick random from list on other script
+
+    private void OnEnable()
     {
-        currentProperties = properties[(int)currentWeather];
-        StartWeather(currentProperties);
+        GameManager.OnTick += Tick;
     }
 
-    void Update()
+    private void OnDisable()
     {
-        
+        GameManager.OnTick -= Tick;
     }
 
-    void StartWeather(weatherProperties weather)
-    {
-        if(weather.Thunder)
-        {
-            Debug.Log("Weather played has thunder");
-        }
-        else
-        {
-            Debug.Log("Weather played has no thunder");
-        }
 
-        if(weather.haveClouds)
+    private void Tick()
+    {
+        currentWeatherTick++;
+
+        if(currentWeatherTick >= ticks_before_change)
         {
-            Debug.Log("Weather played has clouds");
-        }
-        else
-        {
-            Debug.Log("Weather played has no clouds");
-        }
-        if(weather.intesnsity > 0)
-        {
-            Debug.Log("Weather is in effect");
-        }
-        else 
-        {
-            Debug.Log("Weather is clear");
+            currentWeatherTick = 0;
+            OnWeatherChange?.Invoke((weatherList)UnityEngine.Random.Range(0, (int)weatherList.WEATHERLIST));
         }
     }
-}
-
-public enum weatherList
-{
-    CLEAR,
-    OVERCAST,
-    RAINING,
-    THUNDERSTORM,
-    SNOWING,
-    FOG
 }
