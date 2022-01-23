@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WeatherClass : MonoBehaviour
 {
-    private weatherList currentWeather;
-    public weatherList CurrentWeather => currentWeather;
+    [SerializeField] private weatherList currentWeather;
+    public  weatherList CurrentWeather => currentWeather;
 
     private weatherProperties currentProperties;
 
@@ -13,21 +13,28 @@ public class WeatherClass : MonoBehaviour
 
     void Start()
     {
-        currentProperties = properties[(int)currentWeather];
-        StartWeather(currentProperties);
+        //StartWeather(currentProperties);
     }
 
-    void Update()
+    private void OnEnable()
     {
-        
+        WeatherChanger.OnWeatherChange += SetWeather;
     }
 
-    void StartWeather(weatherProperties weather)
+    private void OnDisable()
     {
+        WeatherChanger.OnWeatherChange -= SetWeather;
+    }
+
+
+    public void SetWeather(weatherList weather)
+    {
+        currentWeather = weather;
+
         switch (currentWeather)
         {
             case weatherList.CLEAR:
-                
+
                 break;
             case weatherList.OVERCAST:
 
@@ -45,9 +52,16 @@ public class WeatherClass : MonoBehaviour
 
                 break;
         }
-        Debug.Log(weather);
+
+        currentProperties = properties[(int)currentWeather];
         Debug.Log(currentWeather);
+        Debug.Log(currentProperties);
     }
+
+   /* public void StartWeather(weatherProperties weather)
+    {
+        
+    }*/
 }
 
 public enum weatherList
