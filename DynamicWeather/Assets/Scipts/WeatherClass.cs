@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class WeatherClass : MonoBehaviour
@@ -11,10 +12,7 @@ public class WeatherClass : MonoBehaviour
 
     public List<weatherProperties> properties = new List<weatherProperties>();
 
-    void Start()
-    {
-        //StartWeather(currentProperties);
-    }
+    [SerializeField] private RawImage[] images;
 
     private void OnEnable()
     {
@@ -29,39 +27,34 @@ public class WeatherClass : MonoBehaviour
 
     public void SetWeather(weatherList weather)
     {
+        images[(int)currentWeather].gameObject.SetActive(false);
+
         currentWeather = weather;
+        currentProperties = properties[(int)currentWeather];
 
         switch (currentWeather)
         {
             case weatherList.CLEAR:
-
+                images[0].gameObject.SetActive(true);
                 break;
             case weatherList.OVERCAST:
-
+                images[1].gameObject.SetActive(true);
                 break;
             case weatherList.RAINING:
-
+                images[2].gameObject.SetActive(true);
                 break;
             case weatherList.THUNDERSTORM:
-
+                images[3].gameObject.SetActive(true);
                 break;
             case weatherList.SNOWING:
-
+                images[4].gameObject.SetActive(true);
                 break;
             case weatherList.FOG:
-
+                images[5].gameObject.SetActive(true);
                 break;
         }
-
-        currentProperties = properties[(int)currentWeather];
-        Debug.Log(currentWeather);
-        Debug.Log(currentProperties);
     }
 
-   /* public void StartWeather(weatherProperties weather)
-    {
-        
-    }*/
 }
 
 public enum weatherList
