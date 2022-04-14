@@ -945,27 +945,27 @@ MonoBehaviour:
     haveClouds: 0
     Thunder: 0
   - name: OVERCAST
-    intesnsity: 1
+    intesnsity: 0
     effectMat: {fileID: 0}
     haveClouds: 1
     Thunder: 0
   - name: RAINING
-    intesnsity: 4
+    intesnsity: 0
     effectMat: {fileID: 0}
     haveClouds: 1
     Thunder: 0
   - name: THUNDERSTORM
-    intesnsity: 6
+    intesnsity: 0
     effectMat: {fileID: 0}
     haveClouds: 1
     Thunder: 1
   - name: SNOWING
-    intesnsity: 5
+    intesnsity: 0
     effectMat: {fileID: 0}
     haveClouds: 1
     Thunder: 0
   - name: FOG
-    intesnsity: 3
+    intesnsity: 0
     effectMat: {fileID: 0}
     haveClouds: 0
     Thunder: 0
@@ -1003,9 +1003,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ticks_before_change: 5
-  randomWeather: 1
   weather_slider: {fileID: 1017166910}
-  slider_active: 0
+  slider_active: 1
 --- !u!1 &1006138268
 GameObject:
   m_ObjectHideFlags: 0
