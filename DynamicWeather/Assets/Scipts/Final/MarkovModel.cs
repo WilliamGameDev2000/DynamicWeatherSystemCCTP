@@ -16,9 +16,13 @@ public class MarkovModel : MonoBehaviour
         public Thunderstorm thunder;
     }
 
-    States state;
-    //define start probabilities
-    public void PlayWeather(BaseWeather startingWeather)
+    States states;
+
+    MarkovModel()
+    {
+      
+    }
+    public void PlayWeather(BaseWeather newWeather)
     {
 
     }
