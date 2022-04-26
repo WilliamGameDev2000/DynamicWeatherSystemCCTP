@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rain : BaseWeather
 {
-    Rain()
+    public Rain()
     {
         //define start probability
         startProbability = 0.1;
@@ -15,5 +15,8 @@ public class Rain : BaseWeather
         fogTransition = 0.0;
         snowTransition = 0.1;
         stormTransition = 0.3;
+
+        HasClouds = true;
+        HasThunder = false;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Overcast : BaseWeather
 {
     
-    Overcast()
+    public Overcast()
     {
         //define start probability
         startProbability = 0.3;
@@ -16,5 +16,8 @@ public class Overcast : BaseWeather
         fogTransition = 0.1;
         snowTransition = 0.1;
         stormTransition = 0.1;
+
+        HasClouds = true;
+        HasThunder = false;
     }
 }

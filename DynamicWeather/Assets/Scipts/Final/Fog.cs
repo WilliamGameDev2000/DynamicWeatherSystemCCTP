@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fog : BaseWeather
 {
-    Fog()
+    public Fog()
     {
         //define start probability
         startProbability = 0.1;
@@ -15,5 +15,8 @@ public class Fog : BaseWeather
         fogTransition = 0.3;
         snowTransition = 0.1;
         stormTransition = 0.1;
+
+        HasClouds = false;
+        HasThunder = false;
     }
 }
