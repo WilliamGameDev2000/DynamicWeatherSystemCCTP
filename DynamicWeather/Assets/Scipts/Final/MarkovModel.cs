@@ -27,75 +27,69 @@ public class MarkovModel : MonoBehaviour
         thunder = new Thunderstorm(),
     };
 
-    double[,,,,,] transitionProbabilityMatrix;
+    double[,] transitionProbabilityMatrix;
 
     MarkovModel()
     {
         double[] startProbabilityMatrix = new double[6] { states.overcast.StartProbability, states.rain.StartProbability, states.sunny.StartProbability,
             states.fog.StartProbability,  states.snow.StartProbability, states.thunder.StartProbability };
 
-        transitionProbabilityMatrix = new double[,,,,,]
+        transitionProbabilityMatrix = new double[,]
         {
+            //Overcast
             {
-                {
-                    {
-                        {
-                            //overcast
-                            { states.overcast.OvercastTransition},
-                            { states.overcast.RainTransition},
-                            { states.overcast.SunnyTransition},
-                            { states.overcast.FogTransition},
-                            { states.overcast.SnowTransition},
-                            { states.overcast.StormTransition},
-                        },
-                        {
-                            //rain
-                            { states.rain.OvercastTransition},
-                            { states.rain.RainTransition},
-                            { states.rain.SunnyTransition},
-                            { states.rain.FogTransition},
-                            { states.rain.SnowTransition},
-                            { states.rain.StormTransition},
-                        },
-                        {
-                            //sunny
-                            { states.sunny.OvercastTransition},
-                            { states.sunny.RainTransition},
-                            { states.sunny.SunnyTransition},
-                            { states.sunny.FogTransition},
-                            { states.sunny.SnowTransition},
-                            { states.sunny.StormTransition},
-                        },
-                        {
-                            //fog
-                            { states.fog.OvercastTransition},
-                            { states.fog.RainTransition},
-                            { states.fog.SunnyTransition},
-                            { states.fog.FogTransition},
-                            { states.fog.SnowTransition},
-                            { states.fog.StormTransition},
-                        },
-                        {
-                            //snow
-                            { states.snow.OvercastTransition},
-                            { states.snow.RainTransition},
-                            { states.snow.SunnyTransition},
-                            { states.snow.FogTransition},
-                            { states.snow.SnowTransition},
-                            { states.snow.StormTransition},
-                        },
-                        {
-                            //thunder
-                            { states.thunder.OvercastTransition},
-                            { states.thunder.RainTransition},
-                            { states.thunder.SunnyTransition},
-                            { states.thunder.FogTransition},
-                            { states.thunder.SnowTransition},
-                            { states.thunder.StormTransition},
-                        },
-                    }
-                }
-            }
+                states.overcast.OvercastTransition,
+                states.overcast.RainTransition,
+                states.overcast.SunnyTransition,
+                states.overcast.FogTransition,
+                states.overcast.SnowTransition,
+                states.overcast.StormTransition,
+            },
+            //Raining
+            {
+                states.rain.OvercastTransition,
+                states.rain.RainTransition,
+                states.rain.SunnyTransition,
+                states.rain.FogTransition,
+                states.rain.SnowTransition,
+                states.rain.StormTransition,
+            },
+            //Sunny
+            {
+                states.sunny.OvercastTransition,
+                states.sunny.RainTransition,
+                states.sunny.SunnyTransition,
+                states.sunny.FogTransition,
+                states.sunny.SnowTransition,
+                states.sunny.StormTransition,
+            },
+            //Foggy
+            {
+                states.fog.OvercastTransition,
+                states.fog.RainTransition,
+                states.fog.SunnyTransition,
+                states.fog.FogTransition,
+                states.fog.SnowTransition,
+                states.fog.StormTransition,
+            },
+            //Snowing
+            {
+                states.snow.OvercastTransition,
+                states.snow.RainTransition,
+                states.snow.SunnyTransition,
+                states.snow.FogTransition,
+                states.snow.SnowTransition,
+                states.snow.StormTransition,
+            },
+            //Storming
+            {
+                states.thunder.OvercastTransition,
+                states.thunder.RainTransition,
+                states.thunder.SunnyTransition,
+                states.thunder.FogTransition,
+                states.thunder.SnowTransition,
+                states.thunder.StormTransition,
+            },
         };
 
         switch (GetStartProbability(startProbabilityMatrix))
@@ -123,7 +117,12 @@ public class MarkovModel : MonoBehaviour
                 currentWeather = states.overcast;
                 break;
         }
-        Debug.Log(currentWeather);
+        //Debug.Log(currentWeather);
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log(transitionProbabilityMatrix[1, i]);
+        }
+        
         //PlayWeather(currentWeather);
     }
 
