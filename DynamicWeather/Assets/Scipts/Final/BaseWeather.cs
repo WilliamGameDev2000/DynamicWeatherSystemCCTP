@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BaseWeather
 {
-    protected string Name { get; set; }
+    protected string name;
+    public string Name => name;
     [Range(0, 1)] protected float intensity;
     public float Intensity => intensity;
 
@@ -14,7 +15,7 @@ public class BaseWeather
 
     public BaseWeather()
     {
-        Name = "DefaultName";
+        name = "DefaultName";
         intensity = 0;
         HasClouds = false;
         HasThunder = false;

@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
+
+
+public struct States
+{
+    public Overcast overcast;
+    public Rain rain;
+    public Sunny sunny;
+    public Fog fog;
+    public Snow snow;
+    public Thunderstorm thunder;
+
+    public string[] names;
+}
 
 public class MarkovModel : MonoBehaviour
 {
     BaseWeather currentWeather = null;
     BaseWeather previousWeather = null;
-    //define states here
-    public struct States
-    {
-        public Overcast overcast;
-        public Rain rain;
-        public Sunny sunny;
-        public Fog fog;
-        public Snow snow;
-        public Thunderstorm thunder;
-    }
 
 
     States states = new States
@@ -25,12 +30,16 @@ public class MarkovModel : MonoBehaviour
         fog = new Fog(),
         snow = new Snow(),
         thunder = new Thunderstorm(),
+
+        names = new string[6] { nameof(Overcast), nameof(Rain), nameof(Sunny), nameof(Fog), nameof(Snow), nameof(Thunderstorm) }
     };
 
     double[,] transitionProbabilityMatrix;
 
     MarkovModel()
     {
+       /* Assembly.GetAssembly(typeof(BaseWeather)).GetTypes().Where(TheType => TheType.IsClass && !TheType.IsAbstract && TheType.IsSubclassOf(typeof(BaseWeather)));*/
+
         double[] startProbabilityMatrix = new double[6] { states.overcast.StartProbability, states.rain.StartProbability, states.sunny.StartProbability,
             states.fog.StartProbability,  states.snow.StartProbability, states.thunder.StartProbability };
 
@@ -96,21 +105,45 @@ public class MarkovModel : MonoBehaviour
         {
             case 0:
                 currentWeather = states.overcast;
+                for (int i = 0; i < 6; i++)
+                {
+                    Debug.Log($"Transition from {currentWeather} to {states.names[i]} with {transitionProbabilityMatrix[0, i] * 100}% probability");
+                }
                 break;
             case 1:
                 currentWeather = states.rain;
+                for (int i = 0; i < 6; i++)
+                {
+                    Debug.Log($"Transition from {currentWeather} to {states.names[i]} with {transitionProbabilityMatrix[1, i] * 100}% probability");
+                }
                 break;
             case 2:
                 currentWeather = states.sunny;
+                for (int i = 0; i < 6; i++)
+                {
+                    Debug.Log($"Transition from {currentWeather} to {states.names[i]} with {transitionProbabilityMatrix[2, i] * 100}% probability");
+                }
                 break;
             case 3:
                 currentWeather = states.fog;
+                for (int i = 0; i < 6; i++)
+                {
+                    Debug.Log($"Transition from {currentWeather} to {states.names[i]} with {transitionProbabilityMatrix[3, i] * 100}% probability");
+                }
                 break;
             case 4:
                 currentWeather = states.snow;
+                for (int i = 0; i < 6; i++)
+                {
+                    Debug.Log($"Transition from {currentWeather} to {states.names[i]} with {transitionProbabilityMatrix[4, i] * 100}% probability");
+                }
                 break;
             case 5:
                 currentWeather = states.thunder;
+                for (int i = 0; i < 6; i++)
+                {
+                    Debug.Log($"Transition from {currentWeather} to {states.names[i]} with {transitionProbabilityMatrix[5, i] * 100}% probability");
+                }
                 break;
 
             default:
@@ -118,15 +151,8 @@ public class MarkovModel : MonoBehaviour
                 break;
         }
         //Debug.Log(currentWeather);
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                Debug.Log($"Transition of weather with {transitionProbabilityMatrix[i, j] * 100}% probability");
-            }
-        }
         
-        //PlayWeather(currentWeather);
+        PlayWeather(currentWeather);
     }
 
     private double GetStartProbability(double[] startProb)
@@ -158,17 +184,49 @@ public class MarkovModel : MonoBehaviour
 
         return -1;
     }
-    public void PlayWeather(BaseWeather newWeather)
+
+    private double TransitionChance(double[,] changeProb, int changeFrom)
     {
-        if (previousWeather != null)
+
+        if (changeProb == null || changeProb.Length == 0) return -1;
+        double w, t = 0;
+        int i = 0;
+
+        for (i = 0; i < 6; i++)
         {
-            previousWeather = currentWeather;
+            w = changeProb[changeFrom, i];
+            Debug.Log($"Transition from {states.names[changeFrom]} to {states.names[i]} with {transitionProbabilityMatrix[changeFrom, i] * 100}% probability");
+            if (double.IsPositiveInfinity(w)) return i;
+            else if (w >= 0f && !double.IsNaN(w)) t += changeProb[changeFrom, i];
         }
-        
+        System.Random rand = new System.Random();
+
+        double r = rand.NextDouble();
+        double s = 0f;
+
+        for (i = 0; i < 6; i++)
+        {
+            w = changeProb[changeFrom, i];
+            if (double.IsNaN(w) || w <= 0f) continue;
+
+            s += w / t;
+            if (s >= r) return i;
+        }
+
+        return -1;
+    }
+    private void PlayWeather(BaseWeather newWeather)
+    {
+        if (currentWeather == previousWeather)
+        {
+            return;
+        }
+
         System.Random rand = new System.Random();
         //Basic system
         //take weather and activate it
         Mathf.Lerp(currentWeather.Intensity, newWeather.Intensity, Time.deltaTime * 200);
+        previousWeather = currentWeather;
         currentWeather = newWeather;
         Mathf.Lerp(currentWeather.Intensity, (float)rand.NextDouble(), Time.deltaTime * 200);
         
@@ -176,12 +234,59 @@ public class MarkovModel : MonoBehaviour
 
     }
 
-    public void Transition()
+    private void Transition()
     {
         ///check if there should be a transition based off probabilities from states
         ///
         ///if the weather is different pass that weather into the play weather function
+        ///
+        int weather = -1;
+        for (int j = 0; j < states.names.Length; j++)
+        {
+            if (states.names[j] == currentWeather.ToString())
+            {
+                weather = j;
+            }
+        }
+        switch (TransitionChance(transitionProbabilityMatrix, weather))
+        {
+            case 0:
+                {
+                    PlayWeather(states.overcast);
+                    break;
+                }
+            case 1:
+                {
+                    PlayWeather(states.rain);
+                    break;
+                }
+            case 2:
+                {
+                    PlayWeather(states.sunny);
+                    break;
+                }
+            case 3:
+                {
+                    PlayWeather(states.fog);
+                    break;
+                }
+            case 4:
+                {
+                    PlayWeather(states.snow);
+                    break;
+                }
+            case 5:
+                {
+                    PlayWeather(states.thunder);
+                    break;
+                }
 
+            default:
+                {
+                    PlayWeather(states.overcast);
+                    break;
+                }
+        }
         
     }
 }
