@@ -33,9 +33,9 @@ public class BaseWeather
     protected double stormTransition;
 
     public double OvercastTransition => overcastTransition;
-    public double RainTransition => overcastTransition;
-    public double SunnyTransition => overcastTransition;
-    public double FogTransition => overcastTransition;
-    public double SnowTransition => overcastTransition;
-    public double StormTransition => overcastTransition;
+    public double RainTransition => rainTransition;
+    public double SunnyTransition => sunnyTransition;
+    public double FogTransition => fogTransition;
+    public double SnowTransition => snowTransition;
+    public double StormTransition => stormTransition;
 }

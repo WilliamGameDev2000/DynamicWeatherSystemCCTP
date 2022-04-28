@@ -120,7 +120,10 @@ public class MarkovModel : MonoBehaviour
         //Debug.Log(currentWeather);
         for (int i = 0; i < 6; i++)
         {
-            Debug.Log(transitionProbabilityMatrix[1, i]);
+            for (int j = 0; j < 6; j++)
+            {
+                Debug.Log($"Transition of weather with {transitionProbabilityMatrix[i, j] * 100}% probability");
+            }
         }
         
         //PlayWeather(currentWeather);
