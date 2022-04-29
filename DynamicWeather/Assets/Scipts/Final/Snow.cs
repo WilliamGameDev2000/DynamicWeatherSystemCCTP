@@ -24,7 +24,7 @@ public class Snow : BaseWeather
         icon[4] = GameObject.Find("Snow");
         icon[4].SetActive(false);
 
-        effects[4] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[4] = GameObject.Find("SnowEffect").GetComponent<ParticleSystem>();
         effects[4].gameObject.SetActive(false);
     }
 }

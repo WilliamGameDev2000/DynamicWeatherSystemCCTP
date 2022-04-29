@@ -27,7 +27,7 @@ public class Rain : BaseWeather
         icon[1] = GameObject.Find("Rain");
         icon[1].SetActive(false);
 
-        effects[1] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[1] = GameObject.Find("RainEffect").GetComponent<ParticleSystem>();
         effects[1].gameObject.SetActive(false);
     }
 }

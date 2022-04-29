@@ -25,7 +25,7 @@ public class Fog : BaseWeather
         icon[3] = GameObject.Find("Fog");
         icon[3].SetActive(false);
 
-        effects[3] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[3] = GameObject.Find("FogEffect").GetComponent<ParticleSystem>();
         effects[3].gameObject.SetActive(false);
     }
 }
