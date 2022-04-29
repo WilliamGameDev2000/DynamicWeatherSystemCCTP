@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Thunderstorm : BaseWeather
 {
     public Thunderstorm()
     {
+        name = nameof(Thunderstorm);
         //define start probability
         startProbability = 0.1;
         //define transition probabilities

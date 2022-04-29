@@ -14,7 +14,9 @@ public class WeatherChanger : MonoBehaviour
 
     public static Action<weatherList> OnWeatherChange;
 
-    private void Start()
+    public static Action OnWeatherTransition;
+
+    /*private void Start()
     {
         weather_slider.gameObject.SetActive(slider_active);
         if (!slider_active)
@@ -26,9 +28,9 @@ public class WeatherChanger : MonoBehaviour
             OnWeatherChange?.Invoke(weatherList.CLEAR);
         }
         
-    }
+    }*/
 
-    private void Update()
+    /*private void Update()
     {
         if (slider_active)
         {
@@ -37,7 +39,7 @@ public class WeatherChanger : MonoBehaviour
                 OnWeatherChange?.Invoke((weatherList)v - 1);
             });
         }
-    }
+    }*/
 
     private void OnEnable()
     {
@@ -57,7 +59,8 @@ public class WeatherChanger : MonoBehaviour
         if(currentWeatherTick >= ticks_before_change && slider_active == false)
         {
             currentWeatherTick = 0;
-            OnWeatherChange?.Invoke((weatherList)UnityEngine.Random.Range(0, (int)weatherList.WEATHERLIST));
+            //OnWeatherChange?.Invoke((weatherList)UnityEngine.Random.Range(0, (int)weatherList.WEATHERLIST));
+            OnWeatherTransition?.Invoke();
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Sunny : BaseWeather
 {
     public Sunny()
     {
+        name = nameof(Sunny);
         //define start probability
         startProbability = 0.2;
         //define transition probabilities

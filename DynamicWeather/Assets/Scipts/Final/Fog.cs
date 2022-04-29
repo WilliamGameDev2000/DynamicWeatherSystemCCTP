@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Fog : BaseWeather
 {
     public Fog()
     {
+        name = nameof(Fog);
         //define start probability
         startProbability = 0.1;
         //define transition probabilities
@@ -18,5 +20,6 @@ public class Fog : BaseWeather
 
         HasClouds = false;
         HasThunder = false;
+
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Snow : BaseWeather
 {
     public Snow()
     {
+        name = nameof(Snow);
         //define start probability
         startProbability = 0.2;
         //define transition probabilities

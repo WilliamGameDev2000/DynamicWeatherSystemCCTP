@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Overcast : BaseWeather
 {
-    
+
     public Overcast()
     {
+        name = nameof(Overcast);
+
         //define start probability
         startProbability = 0.3;
         //define transition probabilities
@@ -17,6 +20,7 @@ public class Overcast : BaseWeather
         snowTransition = 0.1;
         stormTransition = 0.1;
 
+        //effect attributes
         HasClouds = true;
         HasThunder = false;
     }
