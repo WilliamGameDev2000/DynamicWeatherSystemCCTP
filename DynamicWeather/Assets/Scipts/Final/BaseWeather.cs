@@ -10,16 +10,19 @@ public class BaseWeather
     [Range(0, 1)] protected float intensity;
     public float Intensity => intensity;
 
-    //public Material effectMat;
-    protected bool HasClouds { get; set; }
-    protected bool HasThunder { get; set; }
+    static protected GameObject[] icon;
+    public GameObject[] Icon => icon;
+
+    static protected ParticleSystem[] effects;
+    public ParticleSystem[] Effects => effects;
+
+
 
     public BaseWeather()
     {
         name = "DefaultName";
         intensity = 0;
-        HasClouds = false;
-        HasThunder = false;
+        icon = new GameObject[6];
     }
 
     //start probability
@@ -40,4 +43,9 @@ public class BaseWeather
     public double FogTransition => fogTransition;
     public double SnowTransition => snowTransition;
     public double StormTransition => stormTransition;
+
+    public void SetIntensity(float new_intesnsity)
+    {
+        intensity = new_intesnsity;
+    }
 }

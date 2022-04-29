@@ -31,8 +31,8 @@ public class MarkovModel : MonoBehaviour
     };
 
     string[] names;
-    GameObject[] icons;
     double[,] transitionProbabilityMatrix;
+    int weatherNumber = -1;
 
     private void OnEnable()
     {
@@ -48,13 +48,6 @@ public class MarkovModel : MonoBehaviour
     {
         names = new string[6] { states.overcast.Name, states.rain.Name,
             states.sunny.Name,states.fog.Name, states.snow.Name, states.thunder.Name };
-        icons = new GameObject[6] { GameObject.Find("Overcast"), GameObject.Find("Rain"), GameObject.Find("Sun"),
-            GameObject.Find("Fog"), GameObject.Find("Snow"), GameObject.Find("Thunder") };
-
-        foreach(GameObject icon in icons)
-        {
-            icon.SetActive(false);
-        }
 
         double[] startProbabilityMatrix = new double[6] { states.overcast.StartProbability, states.rain.StartProbability, states.sunny.StartProbability,
             states.fog.StartProbability,  states.snow.StartProbability, states.thunder.StartProbability };
@@ -121,31 +114,32 @@ public class MarkovModel : MonoBehaviour
         {
             case 0:
                 currentWeather = states.overcast;
-                icons[0].SetActive(true);
+                weatherNumber = 0;
                 break;
             case 1:
                 currentWeather = states.rain;
-                icons[1].SetActive(true);
+                weatherNumber = 1;
                 break;
             case 2:
                 currentWeather = states.sunny;
-                icons[2].SetActive(true);
+                weatherNumber = 2;
                 break;
             case 3:
                 currentWeather = states.fog;
-                icons[3].SetActive(true);
+                weatherNumber = 3;
                 break;
             case 4:
                 currentWeather = states.snow;
-                icons[4].SetActive(true);
+                weatherNumber = 4;
                 break;
             case 5:
                 currentWeather = states.thunder;
-                icons[5].SetActive(true);
+                weatherNumber = 5;
                 break;
 
             default:
                 currentWeather = states.overcast;
+                weatherNumber = 0;
                 break;
         }
         //Debug.Log(currentWeather);
@@ -216,6 +210,7 @@ public class MarkovModel : MonoBehaviour
     {
         if (newWeather == previousWeather)
         {
+            currentWeather.Icon[weatherNumber].SetActive(true);
             previousWeather = currentWeather;
             return;
         }
@@ -225,8 +220,9 @@ public class MarkovModel : MonoBehaviour
         Mathf.Lerp(currentWeather.Intensity, newWeather.Intensity, Time.deltaTime * 200);
         previousWeather = currentWeather;
         currentWeather = newWeather;
-        Mathf.Lerp(currentWeather.Intensity, (float)rand.NextDouble(), Time.deltaTime * 200);
-        
+        currentWeather.Icon[weatherNumber].SetActive(true);
+        currentWeather.SetIntensity(Mathf.Lerp(currentWeather.Intensity, (float)rand.NextDouble(), Time.deltaTime * 200));
+        Debug.Log(currentWeather.Intensity);
         //Additions to system
 
     }
@@ -237,63 +233,55 @@ public class MarkovModel : MonoBehaviour
         ///
         ///if the weather is different pass that weather into the play weather function
         ///
-        int weather = -1;
+        currentWeather.Icon[weatherNumber].SetActive(false);
         for (int j = 0; j < names.Length; j++)
         {
             if (names[j] == currentWeather.ToString())
             {
-                icons[j].SetActive(false);
-                weather = j;
+                weatherNumber = j;
             }
         }
-        switch (TransitionChance(transitionProbabilityMatrix, weather))
+        switch (TransitionChance(transitionProbabilityMatrix, weatherNumber))
         {
             case 0:
                 {
+                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weatherNumber, 0] * 100}% probability");
                     ChangeEffects(states.overcast);
-                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weather, 0] * 100}% probability");
-                    icons[0].SetActive(true);
                     break;
                 }
             case 1:
                 {
+                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weatherNumber, 1] * 100}% probability");
                     ChangeEffects(states.rain);
-                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weather, 1] * 100}% probability");
-                    icons[1].SetActive(true);
                     break;
                 }
             case 2:
                 {
+                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weatherNumber, 2] * 100}% probability");
                     ChangeEffects(states.sunny);
-                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weather, 2] * 100}% probability");
-                    icons[2].SetActive(true);
                     break;
                 }
             case 3:
                 {
+                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weatherNumber, 3] * 100}% probability");
                     ChangeEffects(states.fog);
-                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weather, 3] * 100}% probability");
-                    icons[3].SetActive(true);
                     break;
                 }
             case 4:
                 {
+                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weatherNumber, 4] * 100}% probability");
                     ChangeEffects(states.snow);
-                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weather, 4] * 100}% probability");
-                    icons[4].SetActive(true);
                     break;
                 }
             case 5:
                 {
+                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weatherNumber, 5] * 100}% probability");
                     ChangeEffects(states.thunder);
-                    Debug.Log($"Transition from {previousWeather.Name} to {currentWeather.Name} with {transitionProbabilityMatrix[weather, 5] * 100}% probability");
-                    icons[5].SetActive(true);
                     break;
                 }
             default:
                 {
                     ChangeEffects(states.overcast);
-                    icons[0].SetActive(true);
                     break;
                 }
         }

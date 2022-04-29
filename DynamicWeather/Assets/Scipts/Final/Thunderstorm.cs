@@ -17,8 +17,14 @@ public class Thunderstorm : BaseWeather
         fogTransition = 0.0;
         snowTransition = 0.1;
         stormTransition = 0.4;
+    }
+    [RuntimeInitializeOnLoadMethod]
+    static void Start()
+    {
+        icon[5] = GameObject.Find("Thunder");
+        icon[5].SetActive(false);
 
-        HasClouds = true;
-        HasThunder = true;
+        effects[5] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[5].gameObject.SetActive(false);
     }
 }

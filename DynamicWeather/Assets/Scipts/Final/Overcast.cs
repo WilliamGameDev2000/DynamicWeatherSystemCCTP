@@ -20,8 +20,15 @@ public class Overcast : BaseWeather
         snowTransition = 0.1;
         stormTransition = 0.1;
 
-        //effect attributes
-        HasClouds = true;
-        HasThunder = false;
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    static void Start()
+    {
+        icon[0] = GameObject.Find("Overcast");
+        icon[0].SetActive(false);
+
+        effects[0] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[0].gameObject.SetActive(false);
     }
 }

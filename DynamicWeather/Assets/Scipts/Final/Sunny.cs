@@ -18,7 +18,14 @@ public class Sunny : BaseWeather
         snowTransition = 0.1;
         stormTransition = 0.0;
 
-        HasClouds = false;
-        HasThunder = false;
+    }
+    [RuntimeInitializeOnLoadMethod]
+    static void Start()
+    {
+        icon[2] = GameObject.Find("Sun");
+        icon[2].SetActive(false);
+
+        effects[2] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[2].gameObject.SetActive(false);
     }
 }

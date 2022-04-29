@@ -18,8 +18,16 @@ public class Rain : BaseWeather
         snowTransition = 0.1;
         stormTransition = 0.3;
 
-        HasClouds = true;
-        HasThunder = false;
 
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    static void Start()
+    {
+        icon[1] = GameObject.Find("Rain");
+        icon[1].SetActive(false);
+
+        effects[1] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[1].gameObject.SetActive(false);
     }
 }

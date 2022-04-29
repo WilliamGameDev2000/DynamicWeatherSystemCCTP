@@ -16,9 +16,15 @@ public class Snow : BaseWeather
         sunnyTransition = 0.1;
         fogTransition = 0.1;
         snowTransition = 0.3;
-        stormTransition = 0.0;
+        stormTransition = 0.0;;
+    }
+    [RuntimeInitializeOnLoadMethod]
+    static void Start()
+    {
+        icon[4] = GameObject.Find("Snow");
+        icon[4].SetActive(false);
 
-        HasClouds = true;
-        HasThunder = false;
+        effects[4] = GameObject.Find("").GetComponent<ParticleSystem>();
+        effects[4].gameObject.SetActive(false);
     }
 }
