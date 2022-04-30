@@ -3,7 +3,7 @@
 
 /// <summary>
 /// All weather state scripts, the base weather class and this script were self made with no tutorial,
-/// aside from googling to get individual logic down
+/// aside from googling to get individual logic down and one function
 /// The tick counter script and other scripts that are currently being unused in the Demo folder were made following a tutorial
 /// Here at https://youtu.be/bzvSNcnQ6lI
 /// </summary>
@@ -152,8 +152,19 @@ public class MarkovModel : MonoBehaviour
         ChangeEffects(currentWeather);
     }
 
+    /// <summary>
+    /// Gets all the start probabilities saved in an array and checks them
+    /// if they are valid numbers. Generates a random double between 0 and 1
+    /// then checks if the number meets the weighted criteria.
+    /// This is the only section that came from a tutorial(and was repurposed
+    /// for the jagged array version below)
+    /// Found here https://forum.unity.com/threads/random-numbers-with-a-weighted-chance.442190/
+    /// </summary>
+    /// <param name="startProb"></param>
+    /// <returns>a double indicating which weather state was picked</returns>
     private double GetStartProbability(double[] startProb)
     {
+
         if (startProb == null || startProb.Length == 0) return -1;
 
         double w, t = 0;
@@ -162,6 +173,7 @@ public class MarkovModel : MonoBehaviour
         for(i = 0; i < startProb.Length; i++)
         {
             w = startProb[i];
+            //validity check
             if (double.IsPositiveInfinity(w)) return i;
             else if (w >= 0f && !double.IsNaN(w)) t += startProb[i];
         }
