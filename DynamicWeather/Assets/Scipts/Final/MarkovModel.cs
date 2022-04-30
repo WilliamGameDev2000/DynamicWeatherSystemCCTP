@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 
 
+/// <summary>
+/// All weather state scripts, the base weather class and this script were self made with no tutorial,
+/// aside from googling to get individual logic down
+/// The tick counter script and other scripts that are currently being unused in the Demo folder were made following a tutorial
+/// Here at https://youtu.be/bzvSNcnQ6lI
+/// </summary>
 public struct States
 {
     public Overcast overcast;
@@ -218,8 +224,9 @@ public class MarkovModel : MonoBehaviour
         //take weather and activate it
         StopEffects(currentWeather);
         previousWeather = currentWeather;
+        currentWeather.Icon[weatherNumber].SetActive(false);
         currentWeather = newWeather;
-        currentWeather.Icon[weatherNumber].SetActive(true);
+        newWeather.Icon[weatherNumber].SetActive(true);
         PlayEffects(currentWeather, (float)rand.NextDouble());
         Debug.Log(currentWeather.Intensity);
         //Additions to system

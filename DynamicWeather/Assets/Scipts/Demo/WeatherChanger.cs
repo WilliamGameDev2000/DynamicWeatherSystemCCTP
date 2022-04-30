@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//based off a tutorial, the only change was calling the new function from the script that handles the MarkovChain.
 public class WeatherChanger : MonoBehaviour
 {
     WeatherClass weather;
