@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public struct States
@@ -29,6 +26,8 @@ public class MarkovModel : MonoBehaviour
         snow = new Snow(),
         thunder = new Thunderstorm(),
     };
+
+    public ParticleSystem[] AllEffects;
 
     string[] names;
     double[,] transitionProbabilityMatrix;
@@ -217,11 +216,11 @@ public class MarkovModel : MonoBehaviour
         System.Random rand = new System.Random();
         //Basic system
         //take weather and activate it
-        Mathf.Lerp(currentWeather.Intensity, newWeather.Intensity, Time.deltaTime * 200);
+        StopEffects(currentWeather);
         previousWeather = currentWeather;
         currentWeather = newWeather;
         currentWeather.Icon[weatherNumber].SetActive(true);
-        currentWeather.SetIntensity(Mathf.Lerp(currentWeather.Intensity, (float)rand.NextDouble(), Time.deltaTime * 200));
+        PlayEffects(currentWeather, (float)rand.NextDouble());
         Debug.Log(currentWeather.Intensity);
         //Additions to system
 
@@ -285,5 +284,84 @@ public class MarkovModel : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    void PlayEffects(BaseWeather newWeather, float newIntensity)
+    {
+
+        switch (newWeather.Name)
+        {
+            case nameof(Overcast):
+                AllEffects[0].gameObject.SetActive(true);
+                AllEffects[0].Play();
+                break;
+            case nameof(Rain):
+                AllEffects[0].gameObject.SetActive(true);
+                AllEffects[0].Play();
+                AllEffects[1].gameObject.SetActive(true);
+                AllEffects[1].Play();
+                break;
+            case nameof(Sunny):
+                AllEffects[2].gameObject.SetActive(true);
+                AllEffects[2].Play();
+                break;
+            case nameof(Fog):
+                AllEffects[3].gameObject.SetActive(true);
+                AllEffects[3].Play();
+                break;
+            case nameof(Snow):
+                AllEffects[0].gameObject.SetActive(true);
+                AllEffects[0].Play();
+                AllEffects[4].gameObject.SetActive(true);
+                AllEffects[4].Play();
+                break;
+            case nameof(Thunderstorm):
+                AllEffects[0].gameObject.SetActive(true);
+                AllEffects[0].Play();
+                AllEffects[5].gameObject.SetActive(true);
+                AllEffects[5].Play();
+                break;
+        }
+        var rate = AllEffects[0].emission;
+        rate.rateOverTime = 50 * currentWeather.SetIntensity(Mathf.Lerp(currentWeather.Intensity, newIntensity, Time.deltaTime * 200));
+    }
+
+    void StopEffects(BaseWeather current)
+    {
+        switch (current.Name)
+        {
+            case nameof(Overcast):
+                AllEffects[0].gameObject.SetActive(false);
+                AllEffects[0].Stop();              
+                break;
+            case nameof(Rain):                             
+                AllEffects[0].gameObject.SetActive(false);
+                AllEffects[0].Stop();              
+                AllEffects[1].gameObject.SetActive(false);
+                AllEffects[1].Stop();             
+                break;
+            case nameof(Sunny):                           
+                AllEffects[2].gameObject.SetActive(false);
+                AllEffects[2].Stop();              
+                break;
+            case nameof(Fog):                              
+                AllEffects[3].gameObject.SetActive(false);
+                AllEffects[3].Stop();             
+                break;
+            case nameof(Snow):                            
+                AllEffects[0].gameObject.SetActive(false);
+                AllEffects[0].Stop();              
+                AllEffects[4].gameObject.SetActive(false);
+                AllEffects[4].Stop();              
+                break;
+            case nameof(Thunderstorm):                     
+                AllEffects[0].gameObject.SetActive(false);
+                AllEffects[0].Stop();              
+                AllEffects[5].gameObject.SetActive(false);
+                AllEffects[5].Stop();
+                break;
+        }
+        var rate = AllEffects[0].emission;
+           rate.rateOverTime = currentWeather.SetIntensity(Mathf.Lerp(currentWeather.Intensity, 0, Time.deltaTime * 200));
     }
 }

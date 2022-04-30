@@ -13,8 +13,6 @@ public class BaseWeather
     static protected GameObject[] icon;
     public GameObject[] Icon => icon;
 
-    static protected ParticleSystem[] effects;
-    public ParticleSystem[] Effects => effects;
 
 
 
@@ -44,8 +42,8 @@ public class BaseWeather
     public double SnowTransition => snowTransition;
     public double StormTransition => stormTransition;
 
-    public void SetIntensity(float new_intesnsity)
+    public float SetIntensity(float new_intesnsity)
     {
-        intensity = new_intesnsity;
+        return intensity = new_intesnsity;
     }
 }

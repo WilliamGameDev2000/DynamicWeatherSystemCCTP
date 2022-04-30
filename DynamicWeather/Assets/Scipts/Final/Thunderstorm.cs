@@ -23,8 +23,5 @@ public class Thunderstorm : BaseWeather
     {
         icon[5] = GameObject.Find("Thunder");
         icon[5].SetActive(false);
-
-        effects[5] = GameObject.Find("").GetComponent<ParticleSystem>();
-        effects[5].gameObject.SetActive(false);
     }
 }

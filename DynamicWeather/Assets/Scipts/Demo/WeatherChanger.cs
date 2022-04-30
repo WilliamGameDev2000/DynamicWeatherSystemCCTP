@@ -7,8 +7,8 @@ public class WeatherChanger : MonoBehaviour
 {
     WeatherClass weather;
     [SerializeField] int ticks_before_change = 15;
-    [SerializeField] private Slider weather_slider;
-    [SerializeField] private bool slider_active = false;
+/*    [SerializeField] private Slider weather_slider;
+    [SerializeField] private bool slider_active = false;*/
 
     private int currentWeatherTick = 0;
 
@@ -56,7 +56,7 @@ public class WeatherChanger : MonoBehaviour
     {
         currentWeatherTick++;
 
-        if(currentWeatherTick >= ticks_before_change && slider_active == false)
+        if(currentWeatherTick >= ticks_before_change/* && slider_active == false*/)
         {
             currentWeatherTick = 0;
             //OnWeatherChange?.Invoke((weatherList)UnityEngine.Random.Range(0, (int)weatherList.WEATHERLIST));

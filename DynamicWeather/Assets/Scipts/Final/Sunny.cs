@@ -24,8 +24,5 @@ public class Sunny : BaseWeather
     {
         icon[2] = GameObject.Find("Sun");
         icon[2].SetActive(false);
-
-        effects[2] = GameObject.Find("").GetComponent<ParticleSystem>();
-        effects[2].gameObject.SetActive(false);
     }
 }

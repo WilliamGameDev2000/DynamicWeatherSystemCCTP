@@ -27,8 +27,5 @@ public class Overcast : BaseWeather
     {
         icon[0] = GameObject.Find("Overcast");
         icon[0].SetActive(false);
-
-        effects[0] = GameObject.Find("Clouds").GetComponent<ParticleSystem>();
-        effects[0].gameObject.SetActive(false);
     }
 }
