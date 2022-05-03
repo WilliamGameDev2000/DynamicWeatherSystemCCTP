@@ -236,9 +236,8 @@ public class MarkovModel : MonoBehaviour
         //take weather and activate it
         StopEffects(currentWeather);
         previousWeather = currentWeather;
-        currentWeather.Icon[weatherNumber].SetActive(false);
         currentWeather = newWeather;
-        newWeather.Icon[weatherNumber].SetActive(true);
+        currentWeather.Icon[weatherNumber].SetActive(true);
         PlayEffects(currentWeather, (float)rand.NextDouble());
         Debug.Log(currentWeather.Intensity);
         //Additions to system
@@ -347,6 +346,8 @@ public class MarkovModel : MonoBehaviour
 
     void StopEffects(BaseWeather current)
     {
+        var rate = AllEffects[weatherNumber].emission;
+        rate.rateOverTime = currentWeather.SetIntensity(Mathf.Lerp(currentWeather.Intensity, 0, Time.deltaTime * 200));
         switch (current.Name)
         {
             case nameof(Overcast):
@@ -380,7 +381,5 @@ public class MarkovModel : MonoBehaviour
                 AllEffects[5].Stop();
                 break;
         }
-        var rate = AllEffects[0].emission;
-           rate.rateOverTime = currentWeather.SetIntensity(Mathf.Lerp(currentWeather.Intensity, 0, Time.deltaTime * 200));
     }
 }
